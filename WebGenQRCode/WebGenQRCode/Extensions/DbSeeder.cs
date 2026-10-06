@@ -9,12 +9,13 @@ using WebGenQRCode.Interfaces;
 
 namespace WebGenQRCode.Extensions;
 
-public static class DbSeeder
+public class DbSeeder(IServiceProvider serviceProvider)
+    : IDbSeeder
 {
     //This - Розширення класу WebApplication
-    public static async Task SeedData(this WebApplication webApplication)
+    public async Task SeedData()
     {
-        using var scope = webApplication.Services.CreateScope();
+        using var scope = serviceProvider.CreateScope();
         //Цей об'єкт буде верта посилання на конткетс, який зараєстрвоано в Progran.cs
         var context = scope.ServiceProvider.GetRequiredService<AppQrDbContext>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
